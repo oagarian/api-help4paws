@@ -6,8 +6,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-
-
 func MainRoute(context echo.Context) error {
 	var user User
 	err := json.NewDecoder(context.Request().Body).Decode(&user)
