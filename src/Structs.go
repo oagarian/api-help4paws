@@ -1,9 +1,5 @@
 package main
 
-type User struct {
-	Name     string `json:"user"`
-	Password string `json:"password"`
-}
 
 type Associated struct {
 	Image string `json:"image"`

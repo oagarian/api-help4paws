@@ -7,12 +7,7 @@ import (
 )
 
 func MainRoute(context echo.Context) error {
-	var user User
-	err := json.NewDecoder(context.Request().Body).Decode(&user)
-	if err != nil {
-		context.String(http.StatusBadRequest, "BadRequest")
-	}
-	return context.JSON(http.StatusOK, user)
+	return context.String(http.StatusOK, "Welcome!")
 }
 
 func GetAssociateds(context echo.Context) error {

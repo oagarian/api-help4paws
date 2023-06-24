@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"time"
-
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
