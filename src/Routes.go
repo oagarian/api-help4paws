@@ -15,6 +15,10 @@ func MainRoute(context echo.Context) error {
 	return context.JSON(http.StatusOK, user)
 }
 
+func GetAssociateds(context echo.Context) error {
+	return context.String(http.StatusOK, "WIP")
+}
+
 func AddAssociated(context echo.Context) error {
 	var associated Associated
 	err := json.NewDecoder(context.Request().Body).Decode(&associated)
