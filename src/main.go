@@ -11,7 +11,7 @@ import (
 func main() {
 	app := echo.New()
 	userGroup := app.Group("/user", middleware.RateLimiterWithConfig(middleware.RateLimiterConfig(midw.GetLimiter())))
-	userGroup.GET("/get", route.GetAssociatedsRoute)
+	userGroup.GET("/get/:amount", route.GetAssociatedsRoute)
 
 	adminGroup := app.Group("/admin", middleware.BasicAuth(midw.AuthMiddleware))
 	adminGroup.POST("/add", route.AddAssociatedRoute)

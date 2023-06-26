@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"log"
-	util "modules_API/src/utils"
 	model "modules_API/src/models"
+	util "modules_API/src/utils"
 	"net/http"
-	"github.com/labstack/echo/v4"
+	"strconv"
 
+	"github.com/labstack/echo/v4"
 )
 
 func MainRoute(context echo.Context) error {
@@ -16,11 +17,18 @@ func MainRoute(context echo.Context) error {
 }
 
 func GetAssociatedsRoute(c echo.Context) error {
-	db := util.ConnectDatabase()
-	data, err := db.GetAssociateds(context.Background())
+	value := c.Param("amount") 
+	intValue, err := strconv.Atoi(value)
+
 	if err != nil {
 		log.Println(err)
 	}
+	db := util.ConnectDatabase()
+	data, err := db.GetAssociateds(context.Background(), int32(intValue))
+	if err != nil {
+		log.Println(err)
+	}
+
 	return c.JSON(http.StatusOK, data)
 }
 

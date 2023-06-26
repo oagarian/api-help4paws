@@ -20,11 +20,11 @@ func (q *Queries) DeleteAssociated(ctx context.Context, id int32) error {
 }
 
 const getAssociateds = `-- name: GetAssociateds :many
-SELECT id, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds_table ORDER BY id
+SELECT id, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds_table ORDER BY id LIMIT $1
 `
 
-func (q *Queries) GetAssociateds(ctx context.Context) ([]AssociatedsTable, error) {
-	rows, err := q.db.QueryContext(ctx, getAssociateds)
+func (q *Queries) GetAssociateds(ctx context.Context, limit int32) ([]AssociatedsTable, error) {
+	rows, err := q.db.QueryContext(ctx, getAssociateds, limit)
 	if err != nil {
 		return nil, err
 	}

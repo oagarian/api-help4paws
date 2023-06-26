@@ -3,7 +3,7 @@ INSERT INTO associateds_table (logoImage, asscDescription, email, contactNumber,
 VALUES ($1, $2, $3, $4, $5, $6, $7);
 
 -- name: GetAssociateds :many
-SELECT * FROM associateds_table ORDER BY id;
+SELECT * FROM associateds_table ORDER BY id LIMIT $1;
 
 -- name: GetAssociatedsFromLocation :many
 SELECT * FROM associateds_table WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id;
