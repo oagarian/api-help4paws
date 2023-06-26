@@ -18,7 +18,13 @@ func MainRoute(context echo.Context) error {
 
 func GetAssociatedsRoute(c echo.Context) error {
 	value := c.Param("amount") 
+	if value == "" || value == "null"{
+		value = "0"
+	}
 	intValue, err := strconv.Atoi(value)
+	if intValue <= 0 {
+		intValue = 1
+	}
 
 	if err != nil {
 		log.Println(err)
