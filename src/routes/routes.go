@@ -1,11 +1,14 @@
-package main
+package route
 
 import (
 	"context"
 	"encoding/json"
 	"log"
+	util "modules_API/src/utils"
+	model "modules_API/src/models"
 	"net/http"
 	"github.com/labstack/echo/v4"
+
 )
 
 func MainRoute(context echo.Context) error {
@@ -13,8 +16,7 @@ func MainRoute(context echo.Context) error {
 }
 
 func GetAssociatedsRoute(c echo.Context) error {
-	db := ConnectDatabase()
-
+	db := util.ConnectDatabase()
 	data, err := db.GetAssociateds(context.Background())
 	if err != nil {
 		log.Println(err)
@@ -23,7 +25,7 @@ func GetAssociatedsRoute(c echo.Context) error {
 }
 
 func AddAssociatedRoute(context echo.Context) error {
-	var associated Associated
+	var associated model.Associated
 	err := json.NewDecoder(context.Request().Body).Decode(&associated)
 	if err != nil {
 		context.String(http.StatusBadRequest, "BadRequest")

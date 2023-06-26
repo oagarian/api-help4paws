@@ -1,14 +1,15 @@
-package main
+package util
 
 import (
 	"database/sql"
 	"log"
-	"modules_API/internal/db"
+	"modules_API/src/repositories"
 	"os"
 	"path/filepath"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
+
 func ConnectDatabase() (*db.Queries) {
 	envPath := filepath.Join("..", ".env")
 	err := godotenv.Load(envPath)

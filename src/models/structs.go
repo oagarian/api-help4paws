@@ -1,5 +1,4 @@
-package main
-
+package model
 
 type Associated struct {
 	Image string `json:"image"`
