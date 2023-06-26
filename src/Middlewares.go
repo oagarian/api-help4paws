@@ -5,14 +5,17 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
+
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func AuthMiddleware(username, password string, context echo.Context) (bool, error) {
-	err := godotenv.Load();
+	envPath := filepath.Join("..", ".env")
+	err := godotenv.Load(envPath);
 	if err != nil {
 		log.Println(err)
 	}
