@@ -14,9 +14,10 @@ func main() {
 	userGroup.GET("/get/", route.GetAssociatedsRoute)
 	userGroup.GET("/get", route.GetAssociatedsRoute)
 
-	
 	adminGroup := app.Group("/admin", middleware.BasicAuth(midw.AuthMiddleware))
 	adminGroup.POST("/add", route.AddAssociatedRoute)
+	adminGroup.PUT("/update", route.UpdateAssociatedRoute)
+	adminGroup.DELETE("/delete", route.DeleteAssociatedRoute)
 	
 	app.GET("/", route.MainRoute)
 	app.Start(":8080")

@@ -24,7 +24,8 @@ func GetAssociatedsRoute(context echo.Context) error {
 	queries := context.QueryParams()
 	order := queries.Get("order")
 	locate := queries.Get("locate")
-	value := queries.Get("value")
+	value := queries.Get("amount")
+
 
 	if value == "" || value == "null"{
 		value = "0"
@@ -50,13 +51,51 @@ func AddAssociatedRoute(context echo.Context) error {
 	database.InsertAssociated(ctx.Background(), db.InsertAssociatedParams{
 		Asscname: payload.AsscName, 
 		Logoimage: payload.Logoimage, 
+		Asscdescription: payload.Asscdescription,
 		Email: payload.Email, 
 		Contactnumber: payload.Contactnumber, 
 		Pix: payload.Pix, 
 		Street: payload.Street, 
 		Descriptionaddr: payload.DescriptionAddr,
 	})
-	return context.JSON(http.StatusOK, payload)
+	return context.JSON(http.StatusCreated, payload)
 }
+
+
+func UpdateAssociatedRoute(context echo.Context) error {
+	context.Response().Header().Set("Content-Type", "application/json")
+	var associated model.UpdateAssociated
+	payload := associated
+	if err := context.Bind(&payload); err != nil {
+		context.String(http.StatusBadRequest, "BadRequest")
+	}
+
+
+	database.UpdateAssociated(ctx.Background(), db.UpdateAssociatedParams{
+		Asscname: payload.AsscName, 
+		Logoimage: payload.Logoimage, 
+		Asscdescription: payload.Asscdescription,
+		Email: payload.Email, 
+		Contactnumber: payload.Contactnumber, 
+		Pix: payload.Pix, 
+		Street: payload.Street, 
+		Descriptionaddr: payload.DescriptionAddr,
+		ID: payload.ID,
+	})
+	return context.JSON(http.StatusAccepted, payload)
+}
+
+func DeleteAssociatedRoute(context echo.Context) error {
+	context.Response().Header().Set("Content-Type", "application/json")
+	valueID := context.FormValue("ID")
+	ID, err := strconv.Atoi(valueID)
+	if err != nil {
+		log.Println(err)
+	}
+
+	database.DeleteAssociated(ctx.Background(), int32(ID))
+	return context.String(http.StatusAccepted, "Deleted successfully!")
+}
+
 
 
