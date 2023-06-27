@@ -6,8 +6,9 @@ package db
 
 import ()
 
-type AssociatedsTable struct {
+type Associated struct {
 	ID              int32
+	Asscname        string
 	Logoimage       string
 	Asscdescription string
 	Email           string

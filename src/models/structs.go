@@ -1,20 +1,18 @@
 package model
 
+
 type Associated struct {
-	Image string `json:"image"`
-	Name string `json:"name"`
-	Description string `json:"description"`
-	Contact []Contact `json:"contact"`
-	Address []Address `json:"address"`
+	AsscName string `json:"asscname" query:"asscname"`
+	Logoimage string `json:"logoimage" query:"logoimage"`
+	Asscdescription string `json:"asscdescription" query:"asscdescription"`
+	Email string `json:"email" query:"email"`
+	Contactnumber string `json:"contactnumber" query:"contactnumber"`
+	Pix string `json:"pix" query:"pix"`
+	Street string `json:"street" query:"street"`
+	DescriptionAddr string `json:"descriptionaddr" query:"descriptionaddr"`
 }
 
-type Contact struct {
-	Email string `json:"email"`
-	Number string `json:"number"`
-	Pix string `json:"pix"`
-}
 
-type Address struct {
-	Street string `json:"street"`
-	DescriptionAddr string `json:"descriptionAddress"`
-}
+
+
+

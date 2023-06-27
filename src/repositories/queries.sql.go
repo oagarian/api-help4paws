@@ -11,7 +11,7 @@ import (
 )
 
 const deleteAssociated = `-- name: DeleteAssociated :exec
-DELETE FROM associateds_table WHERE id = $1
+DELETE FROM associateds WHERE id = $1
 `
 
 func (q *Queries) DeleteAssociated(ctx context.Context, id int32) error {
@@ -20,20 +20,21 @@ func (q *Queries) DeleteAssociated(ctx context.Context, id int32) error {
 }
 
 const getAssociateds = `-- name: GetAssociateds :many
-SELECT id, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds_table ORDER BY id LIMIT $1
+SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds ORDER BY id LIMIT $1
 `
 
-func (q *Queries) GetAssociateds(ctx context.Context, limit int32) ([]AssociatedsTable, error) {
+func (q *Queries) GetAssociateds(ctx context.Context, limit int32) ([]Associated, error) {
 	rows, err := q.db.QueryContext(ctx, getAssociateds, limit)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []AssociatedsTable
+	var items []Associated
 	for rows.Next() {
-		var i AssociatedsTable
+		var i Associated
 		if err := rows.Scan(
 			&i.ID,
+			&i.Asscname,
 			&i.Logoimage,
 			&i.Asscdescription,
 			&i.Email,
@@ -56,20 +57,21 @@ func (q *Queries) GetAssociateds(ctx context.Context, limit int32) ([]Associated
 }
 
 const getAssociatedsFromLocation = `-- name: GetAssociatedsFromLocation :many
-SELECT id, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds_table WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id
+SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id
 `
 
-func (q *Queries) GetAssociatedsFromLocation(ctx context.Context, dollar_1 sql.NullString) ([]AssociatedsTable, error) {
+func (q *Queries) GetAssociatedsFromLocation(ctx context.Context, dollar_1 sql.NullString) ([]Associated, error) {
 	rows, err := q.db.QueryContext(ctx, getAssociatedsFromLocation, dollar_1)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []AssociatedsTable
+	var items []Associated
 	for rows.Next() {
-		var i AssociatedsTable
+		var i Associated
 		if err := rows.Scan(
 			&i.ID,
+			&i.Asscname,
 			&i.Logoimage,
 			&i.Asscdescription,
 			&i.Email,
@@ -92,20 +94,21 @@ func (q *Queries) GetAssociatedsFromLocation(ctx context.Context, dollar_1 sql.N
 }
 
 const getAssociatedsInverted = `-- name: GetAssociatedsInverted :many
-SELECT id, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds_table ORDER BY id DESC
+SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds ORDER BY id DESC
 `
 
-func (q *Queries) GetAssociatedsInverted(ctx context.Context) ([]AssociatedsTable, error) {
+func (q *Queries) GetAssociatedsInverted(ctx context.Context) ([]Associated, error) {
 	rows, err := q.db.QueryContext(ctx, getAssociatedsInverted)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []AssociatedsTable
+	var items []Associated
 	for rows.Next() {
-		var i AssociatedsTable
+		var i Associated
 		if err := rows.Scan(
 			&i.ID,
+			&i.Asscname,
 			&i.Logoimage,
 			&i.Asscdescription,
 			&i.Email,
@@ -128,11 +131,12 @@ func (q *Queries) GetAssociatedsInverted(ctx context.Context) ([]AssociatedsTabl
 }
 
 const insertAssociated = `-- name: InsertAssociated :exec
-INSERT INTO associateds_table (logoImage, asscDescription, email, contactNumber, pix, street, descriptionAddr) 
-VALUES ($1, $2, $3, $4, $5, $6, $7)
+INSERT INTO associateds (asscName, logoImage, asscDescription, email, contactNumber, pix, street, descriptionAddr) 
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 `
 
 type InsertAssociatedParams struct {
+	Asscname        string
 	Logoimage       string
 	Asscdescription string
 	Email           string
@@ -144,6 +148,7 @@ type InsertAssociatedParams struct {
 
 func (q *Queries) InsertAssociated(ctx context.Context, arg InsertAssociatedParams) error {
 	_, err := q.db.ExecContext(ctx, insertAssociated,
+		arg.Asscname,
 		arg.Logoimage,
 		arg.Asscdescription,
 		arg.Email,
@@ -156,10 +161,11 @@ func (q *Queries) InsertAssociated(ctx context.Context, arg InsertAssociatedPara
 }
 
 const updateAssociated = `-- name: UpdateAssociated :exec
-UPDATE associateds_table SET logoImage = $1, asscDescription = $2, email = $3, contactNumber = $4, pix = $5, street = $6, descriptionAddr = $7 WHERE id = $8
+UPDATE associateds SET  asscName = $1, logoImage = $2, asscDescription = $3, email = $4, contactNumber = $5, pix = $6, street = $7, descriptionAddr = $8 WHERE id = $9
 `
 
 type UpdateAssociatedParams struct {
+	Asscname        string
 	Logoimage       string
 	Asscdescription string
 	Email           string
@@ -172,6 +178,7 @@ type UpdateAssociatedParams struct {
 
 func (q *Queries) UpdateAssociated(ctx context.Context, arg UpdateAssociatedParams) error {
 	_, err := q.db.ExecContext(ctx, updateAssociated,
+		arg.Asscname,
 		arg.Logoimage,
 		arg.Asscdescription,
 		arg.Email,

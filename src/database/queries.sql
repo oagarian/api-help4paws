@@ -1,18 +1,18 @@
 -- name: InsertAssociated :exec 
-INSERT INTO associateds_table (logoImage, asscDescription, email, contactNumber, pix, street, descriptionAddr) 
-VALUES ($1, $2, $3, $4, $5, $6, $7);
+INSERT INTO associateds (asscName, logoImage, asscDescription, email, contactNumber, pix, street, descriptionAddr) 
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
 
 -- name: GetAssociateds :many
-SELECT * FROM associateds_table ORDER BY id LIMIT $1;
+SELECT * FROM associateds ORDER BY id LIMIT $1;
 
 -- name: GetAssociatedsFromLocation :many
-SELECT * FROM associateds_table WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id;
+SELECT * FROM associateds WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id;
 
 -- name: GetAssociatedsInverted :many 
-SELECT * FROM associateds_table ORDER BY id DESC;
+SELECT * FROM associateds ORDER BY id DESC;
 
 -- name: DeleteAssociated :exec
-DELETE FROM associateds_table WHERE id = $1;
+DELETE FROM associateds WHERE id = $1;
 
 -- name: UpdateAssociated :exec
-UPDATE associateds_table SET logoImage = $1, asscDescription = $2, email = $3, contactNumber = $4, pix = $5, street = $6, descriptionAddr = $7 WHERE id = $8;
+UPDATE associateds SET  asscName = $1, logoImage = $2, asscDescription = $3, email = $4, contactNumber = $5, pix = $6, street = $7, descriptionAddr = $8 WHERE id = $9;

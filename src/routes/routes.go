@@ -1,10 +1,10 @@
 package route
 
 import (
-	"context"
-	"encoding/json"
+	ctx "context"
 	"log"
 	model "modules_API/src/models"
+	db "modules_API/src/repositories"
 	util "modules_API/src/utils"
 	"net/http"
 	"strconv"
@@ -16,8 +16,12 @@ func MainRoute(context echo.Context) error {
 	return context.String(http.StatusOK, "Welcome!")
 }
 
-func GetAssociatedsRoute(c echo.Context) error {
-	value := c.Param("amount") 
+var database = util.ConnectDatabase()
+
+
+func GetAssociatedsRoute(context echo.Context) error {
+	context.Response().Header().Set("Content-Type", "application/json")
+	value := context.Param("amount") 
 	if value == "" || value == "null"{
 		value = "0"
 	}
@@ -29,20 +33,28 @@ func GetAssociatedsRoute(c echo.Context) error {
 	if err != nil {
 		log.Println(err)
 	}
-	db := util.ConnectDatabase()
-	data, err := db.GetAssociateds(context.Background(), int32(intValue))
+	data, err := database.GetAssociateds(ctx.Background(), int32(intValue))
 	if err != nil {
 		log.Println(err)
 	}
-
-	return c.JSON(http.StatusOK, data)
+	return context.JSON(http.StatusOK, data)
 }
 
 func AddAssociatedRoute(context echo.Context) error {
+	context.Response().Header().Set("Content-Type", "application/json")
 	var associated model.Associated
-	err := json.NewDecoder(context.Request().Body).Decode(&associated)
-	if err != nil {
+	payload := associated
+	if err := context.Bind(&payload); err != nil {
 		context.String(http.StatusBadRequest, "BadRequest")
 	}
-	return context.JSON(http.StatusOK, associated)
+	database.InsertAssociated(ctx.Background(), db.InsertAssociatedParams{
+		Asscname: payload.AsscName, 
+		Logoimage: payload.Logoimage, 
+		Email: payload.Email, 
+		Contactnumber: payload.Contactnumber, 
+		Pix: payload.Pix, 
+		Street: payload.Street, 
+		Descriptionaddr: payload.DescriptionAddr,
+	})
+	return context.JSON(http.StatusOK, payload)
 }

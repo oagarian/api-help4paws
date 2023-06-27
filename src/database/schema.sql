@@ -1,5 +1,6 @@
-CREATE TABLE associateds_table (
+CREATE TABLE associateds (
     id serial primary key not null,
+    asscName text not null,
     logoImage text not null,
     asscDescription text not null,
     email text not null,
