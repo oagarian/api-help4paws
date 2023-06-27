@@ -8,7 +8,6 @@ import (
 	util "modules_API/src/utils"
 	"net/http"
 	"strconv"
-
 	"github.com/labstack/echo/v4"
 )
 
@@ -21,7 +20,8 @@ var database = util.ConnectDatabase()
 
 func GetAssociatedsRoute(context echo.Context) error {
 	context.Response().Header().Set("Content-Type", "application/json")
-	value := context.Param("amount") 
+	value := context.QueryParam("amount")
+	log.Println(value)
 	if value == "" || value == "null"{
 		value = "0"
 	}
@@ -58,3 +58,5 @@ func AddAssociatedRoute(context echo.Context) error {
 	})
 	return context.JSON(http.StatusOK, payload)
 }
+
+
