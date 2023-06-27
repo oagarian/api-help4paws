@@ -57,11 +57,16 @@ func (q *Queries) GetAssociateds(ctx context.Context, limit int32) ([]Associated
 }
 
 const getAssociatedsFromLocation = `-- name: GetAssociatedsFromLocation :many
-SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id
+SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id LIMIT $2
 `
 
-func (q *Queries) GetAssociatedsFromLocation(ctx context.Context, dollar_1 sql.NullString) ([]Associated, error) {
-	rows, err := q.db.QueryContext(ctx, getAssociatedsFromLocation, dollar_1)
+type GetAssociatedsFromLocationParams struct {
+	Column1 sql.NullString
+	Limit   int32
+}
+
+func (q *Queries) GetAssociatedsFromLocation(ctx context.Context, arg GetAssociatedsFromLocationParams) ([]Associated, error) {
+	rows, err := q.db.QueryContext(ctx, getAssociatedsFromLocation, arg.Column1, arg.Limit)
 	if err != nil {
 		return nil, err
 	}
@@ -94,11 +99,11 @@ func (q *Queries) GetAssociatedsFromLocation(ctx context.Context, dollar_1 sql.N
 }
 
 const getAssociatedsInverted = `-- name: GetAssociatedsInverted :many
-SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds ORDER BY id DESC
+SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds ORDER BY id DESC LIMIT $1
 `
 
-func (q *Queries) GetAssociatedsInverted(ctx context.Context) ([]Associated, error) {
-	rows, err := q.db.QueryContext(ctx, getAssociatedsInverted)
+func (q *Queries) GetAssociatedsInverted(ctx context.Context, limit int32) ([]Associated, error) {
+	rows, err := q.db.QueryContext(ctx, getAssociatedsInverted, limit)
 	if err != nil {
 		return nil, err
 	}

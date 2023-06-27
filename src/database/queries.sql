@@ -6,10 +6,10 @@ VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
 SELECT * FROM associateds ORDER BY id LIMIT $1;
 
 -- name: GetAssociatedsFromLocation :many
-SELECT * FROM associateds WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id;
+SELECT * FROM associateds WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id LIMIT $2;
 
 -- name: GetAssociatedsInverted :many 
-SELECT * FROM associateds ORDER BY id DESC;
+SELECT * FROM associateds ORDER BY id DESC LIMIT $1;
 
 -- name: DeleteAssociated :exec
 DELETE FROM associateds WHERE id = $1;
