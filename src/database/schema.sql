@@ -10,3 +10,11 @@ CREATE TABLE associateds (
     descriptionAddr text not null
 );
 
+CREATE TABLE logs (
+    id serial primary key not null,
+    timedate date, 
+    timehour time,
+    descriptionerror text,
+    wherehappened text,
+    solved boolean
+);

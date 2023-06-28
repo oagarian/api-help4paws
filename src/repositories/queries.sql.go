@@ -169,6 +169,29 @@ func (q *Queries) InsertAssociated(ctx context.Context, arg InsertAssociatedPara
 	return err
 }
 
+const registerError = `-- name: RegisterError :exec
+INSERT INTO logs (timedate, timehour, descriptionerror, wherehappened, solved) VALUES ($1, $2, $3, $4, $5)
+`
+
+type RegisterErrorParams struct {
+	Timedate         sql.NullTime
+	Timehour         sql.NullTime
+	Descriptionerror sql.NullString
+	Wherehappened    sql.NullString
+	Solved           sql.NullBool
+}
+
+func (q *Queries) RegisterError(ctx context.Context, arg RegisterErrorParams) error {
+	_, err := q.db.ExecContext(ctx, registerError,
+		arg.Timedate,
+		arg.Timehour,
+		arg.Descriptionerror,
+		arg.Wherehappened,
+		arg.Solved,
+	)
+	return err
+}
+
 const updateAssociated = `-- name: UpdateAssociated :exec
 UPDATE associateds SET  asscName = $1, logoImage = $2, asscDescription = $3, email = $4, contactNumber = $5, pix = $6, street = $7, descriptionAddr = $8 WHERE id = $9
 `

@@ -1,52 +1,51 @@
 package util
 
 import (
-	"bufio"
-	"fmt"
+	ctx "context"
+	"database/sql"
 	"log"
-	"os"
-	"path/filepath"
+	db "modules_API/src/repositories"
+	"path"
+	"runtime"
 	"time"
 )
 
 func RecordLog(errSend error) {
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Println(err)
-		return
+	_, archive, _, ok := runtime.Caller(1)
+	if !ok {
+		return 
 	}
 
-	fileTime := time.Now().Format("02-01-06-15-04")
-	fileName := fmt.Sprintf("%s.txt", fileTime)
-	adjacentFolder := filepath.Join(dir, "../src/", "logs")
+	pathArchive := path.Base(archive)
 
-	if _, err := os.Stat(adjacentFolder); os.IsNotExist(err) {
-		err := os.Mkdir(adjacentFolder, 0755)
-		if err != nil {
-			log.Println(err)
-			return
-		}
-	}
 
-	filePath := filepath.Join(adjacentFolder, fileName)
-	file, err := os.Create(filePath)
-	if err != nil {
-		log.Println("Error on create: ", err)
-		return
-	}
-	defer file.Close()
-
-	writer := bufio.NewWriter(file)
+	time := time.Now()
 	errorBytes := []byte(errSend.Error())
-	_, err = writer.WriteString(string(errorBytes))
-	if err != nil {
-		log.Println("Error on write: ", err)
-		return
-	}
+	errorString := string(errorBytes)
+	database := ConnectDatabase()
 
-	err = writer.Flush()
-	if err != nil {
-		log.Println("Error on flush: ", err)
-		return
-	}
+	database.RegisterError(ctx.Background(), db.RegisterErrorParams{
+		Timedate: sql.NullTime{
+			Time: time,
+			Valid: true,
+		},
+		Timehour: sql.NullTime{
+			Time: time,
+			Valid: true,
+		},
+		Descriptionerror: sql.NullString{
+			String: errorString,
+			Valid: true,
+		},
+		Wherehappened: sql.NullString{
+			String: pathArchive,
+			Valid: true,
+		},
+		Solved: sql.NullBool{
+			Bool: false, 
+			Valid: true,
+		},
+	})
+	log.Println("Error assigned")
+	
 }
