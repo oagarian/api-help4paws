@@ -5,8 +5,13 @@ VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
 -- name: GetAssociateds :many
 SELECT * FROM associateds ORDER BY id LIMIT $1;
 
+
 -- name: GetAssociatedsFromLocation :many
-SELECT * FROM associateds WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id LIMIT $2;
+SELECT * FROM associateds ORDER BY 
+CASE 
+    WHEN descriptionAddr LIKE '%' || $1 || '%' THEN 0 
+    ELSE 1 
+END LIMIT $2;
 
 -- name: GetAssociatedsInverted :many 
 SELECT * FROM associateds ORDER BY id DESC LIMIT $1;

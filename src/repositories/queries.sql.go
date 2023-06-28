@@ -57,7 +57,11 @@ func (q *Queries) GetAssociateds(ctx context.Context, limit int32) ([]Associated
 }
 
 const getAssociatedsFromLocation = `-- name: GetAssociatedsFromLocation :many
-SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds WHERE descriptionAddr LIKE '%' || $1 || '%' ORDER BY id LIMIT $2
+SELECT id, asscname, logoimage, asscdescription, email, contactnumber, pix, street, descriptionaddr FROM associateds ORDER BY 
+CASE 
+    WHEN descriptionAddr LIKE '%' || $1 || '%' THEN 0 
+    ELSE 1 
+END LIMIT $2
 `
 
 type GetAssociatedsFromLocationParams struct {

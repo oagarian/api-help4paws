@@ -2,7 +2,6 @@ package route
 
 import (
 	ctx "context"
-	"errors"
 	"log"
 	model "modules_API/src/models"
 	db "modules_API/src/repositories"
@@ -41,8 +40,6 @@ func GetAssociatedsRoute(context echo.Context) error {
 		util.RecordLog(err)
 	}
 	data := service.SelectRouteResult(order, locate, int32(intValue), context)
-	errTest := errors.New("Erro")
-	util.RecordLog(errTest)
 	return context.JSON(http.StatusOK, data)
 }
 
