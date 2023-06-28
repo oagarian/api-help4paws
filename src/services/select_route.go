@@ -16,24 +16,28 @@ func SelectRouteResult(order, locate string, intValue int32, context echo.Contex
 			data, err := database.GetAssociateds(ctx.Background(), int32(intValue))
 			if err != nil {
 				log.Println(err)
+				util.RecordLog(err)
 			}
 			return data
 		case "2":
 			data, err := database.GetAssociatedsFromLocation(ctx.Background(), db.GetAssociatedsFromLocationParams{Column1: sql.NullString{String: locate, Valid: true}, Limit: int32(intValue)})
 			if err != nil {
 				log.Println(err)
+				util.RecordLog(err)
 			}
 			return data
 		case "3":
 			data, err := database.GetAssociatedsInverted(ctx.Background(), int32(intValue))
 			if err != nil {
 				log.Println(err)
+				util.RecordLog(err)
 			}
 			return data
 		default: 
 			data, err := database.GetAssociateds(ctx.Background(), int32(intValue))
 			if err != nil {
 				log.Println(err)
+				util.RecordLog(err)
 			}
 			return data
 	}

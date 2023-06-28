@@ -2,13 +2,15 @@ package route
 
 import (
 	ctx "context"
+	"errors"
+	"log"
 	model "modules_API/src/models"
 	db "modules_API/src/repositories"
 	service "modules_API/src/services"
 	util "modules_API/src/utils"
 	"net/http"
 	"strconv"
-	"log"
+
 	"github.com/labstack/echo/v4"
 )
 
@@ -36,8 +38,11 @@ func GetAssociatedsRoute(context echo.Context) error {
 	}
 	if err != nil {
 		log.Println(err)
+		util.RecordLog(err)
 	}
 	data := service.SelectRouteResult(order, locate, int32(intValue), context)
+	errTest := errors.New("Erro")
+	util.RecordLog(errTest)
 	return context.JSON(http.StatusOK, data)
 }
 
@@ -70,7 +75,6 @@ func UpdateAssociatedRoute(context echo.Context) error {
 		context.String(http.StatusBadRequest, "BadRequest")
 	}
 
-
 	database.UpdateAssociated(ctx.Background(), db.UpdateAssociatedParams{
 		Asscname: payload.AsscName, 
 		Logoimage: payload.Logoimage, 
@@ -91,6 +95,7 @@ func DeleteAssociatedRoute(context echo.Context) error {
 	ID, err := strconv.Atoi(valueID)
 	if err != nil {
 		log.Println(err)
+		util.RecordLog(err)
 	}
 
 	database.DeleteAssociated(ctx.Background(), int32(ID))
