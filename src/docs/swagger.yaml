@@ -1,0 +1,188 @@
+definitions:
+  route.AssociatedRequest:
+    properties:
+      asscdescription:
+        type: string
+      asscname:
+        type: string
+      contactnumber:
+        type: string
+      descriptionaddr:
+        type: string
+      email:
+        type: string
+      logoimage:
+        type: string
+      pix:
+        type: string
+      street:
+        type: string
+    type: object
+  route.AssociatedResponse:
+    properties:
+      asscdescription:
+        type: string
+      asscname:
+        type: string
+      contactnumber:
+        type: string
+      descriptionaddr:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      logoimage:
+        type: string
+      pix:
+        type: string
+      street:
+        type: string
+    type: object
+  route.UpdateAssociatedRequest:
+    properties:
+      asscdescription:
+        type: string
+      asscname:
+        type: string
+      contactnumber:
+        type: string
+      descriptionaddr:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      logoimage:
+        type: string
+      pix:
+        type: string
+      street:
+        type: string
+    type: object
+  route.UpdateAssociatedResponse:
+    properties:
+      asscdescription:
+        type: string
+      asscname:
+        type: string
+      contactnumber:
+        type: string
+      descriptionaddr:
+        type: string
+      email:
+        type: string
+      logoimage:
+        type: string
+      pix:
+        type: string
+      street:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /admin/add:
+    post:
+      consumes:
+      - application/json
+      description: Add a new associated with the provided information.
+      parameters:
+      - description: Associated data
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/route.AssociatedRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/route.AssociatedResponse'
+      security:
+      - BasicAuth: []
+      summary: Add an associated
+      tags:
+      - Admin
+  /admin/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an associated based on the provided ID.
+      parameters:
+      - description: ID of the associated to delete
+        in: formData
+        name: ID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Deleted successfully!
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: Delete an associated
+      tags:
+      - Admin
+  /admin/update:
+    put:
+      consumes:
+      - application/json
+      description: Update an existing associated with the provided information.
+      parameters:
+      - description: Updated associated data
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/route.UpdateAssociatedRequest'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/route.UpdateAssociatedResponse'
+      security:
+      - BasicAuth: []
+      summary: Update an associated
+      tags:
+      - Admin
+  /user/get:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of associateds based on the provided order, locate,
+        and amount.
+      parameters:
+      - description: 'The order to sort the associateds: 1 = Ascendant; 2 = By location;
+          3 = Descendant'
+        in: query
+        name: order
+        type: integer
+      - description: The location of the associateds
+        in: query
+        name: locate
+        type: string
+      - description: The amount of associateds to return
+        in: query
+        name: amount
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/route.AssociatedResponse'
+            type: array
+      summary: Get associateds
+      tags:
+      - User
+swagger: "2.0"

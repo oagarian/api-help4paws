@@ -1,10 +1,12 @@
 package main
 
 import (
-	route "modules_API/src/routes"
 	midw "modules_API/src/middlewares"
+	route "modules_API/src/routes"
+	_ "modules_API/src/docs"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 
@@ -19,6 +21,7 @@ func main() {
 	adminGroup.PUT("/update", route.UpdateAssociatedRoute)
 	adminGroup.DELETE("/delete", route.DeleteAssociatedRoute)
 	
+	app.GET("/docs/*", echoSwagger.WrapHandler)
 	app.GET("/", route.MainRoute)
 	app.Start(":8080")
 }
