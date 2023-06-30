@@ -1,4 +1,4 @@
-# API_Help4Paws
+# API Help4Paws
 
 API para o aplicaitvo [Help4Paws](https://github.com/oagarian/Help4Paws)
 
@@ -7,8 +7,8 @@ API para o aplicaitvo [Help4Paws](https://github.com/oagarian/Help4Paws)
 ### 1. Clone o repositório e entre diretório do projeto
 
 ~~~bash
-$ git clone https://github.com/oagarian/API_app.git
-$ cd API_app/
+$ git clone https://github.com/oagarian/api-help4paws.git
+$ cd api-help4paws/
 ~~~
 
 ### 2. Configure as variáveis de variáveis de ambiente
