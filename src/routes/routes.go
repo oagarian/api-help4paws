@@ -9,7 +9,6 @@ import (
 	util "modules_API/src/utils"
 	"net/http"
 	"strconv"
-
 	"github.com/labstack/echo/v4"
 )
 
@@ -26,7 +25,6 @@ func GetAssociatedsRoute(context echo.Context) error {
 	order := queries.Get("order")
 	locate := queries.Get("locate")
 	value := queries.Get("amount")
-
 
 	if value == "" || value == "null"{
 		value = "0"
@@ -66,12 +64,18 @@ func AddAssociatedRoute(context echo.Context) error {
 
 func UpdateAssociatedRoute(context echo.Context) error {
 	context.Response().Header().Set("Content-Type", "application/json")
-	var associated model.UpdateAssociated
+	var associated model.Associated
 	payload := associated
 	if err := context.Bind(&payload); err != nil {
 		context.String(http.StatusBadRequest, "BadRequest")
 	}
-
+	queries := context.QueryParams()
+	ID := queries.Get("ID")
+	convert, err := strconv.Atoi(ID)
+	if err != nil {
+		util.RecordLog(err)
+	}
+	IDInt := int32(convert)
 	database.UpdateAssociated(ctx.Background(), db.UpdateAssociatedParams{
 		Asscname: payload.AsscName, 
 		Logoimage: payload.Logoimage, 
@@ -81,7 +85,7 @@ func UpdateAssociatedRoute(context echo.Context) error {
 		Pix: payload.Pix, 
 		Street: payload.Street, 
 		Descriptionaddr: payload.DescriptionAddr,
-		ID: payload.ID,
+		ID: IDInt,
 	})
 	return context.JSON(http.StatusAccepted, payload)
 }
