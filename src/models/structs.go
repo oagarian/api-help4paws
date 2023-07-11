@@ -1,6 +1,5 @@
 package model
 
-
 type Associated struct {
 	AsscName string `json:"asscname" query:"asscname"`
 	Logoimage string `json:"logoimage" query:"logoimage"`

@@ -5,7 +5,6 @@ VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
 -- name: GetAssociateds :many
 SELECT * FROM associateds ORDER BY id LIMIT $1;
 
-
 -- name: GetAssociatedsFromLocation :many
 SELECT * FROM associateds ORDER BY 
 CASE 
@@ -21,7 +20,6 @@ DELETE FROM associateds WHERE id = $1;
 
 -- name: UpdateAssociated :exec
 UPDATE associateds SET  asscName = $1, logoImage = $2, asscDescription = $3, email = $4, contactNumber = $5, pix = $6, street = $7, descriptionAddr = $8 WHERE id = $9;
-
 
 -- name: RegisterError :exec
 INSERT INTO logs (timedate, timehour, descriptionerror, wherehappened, solved) VALUES ($1, $2, $3, $4, $5);
