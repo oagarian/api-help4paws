@@ -51,8 +51,6 @@ definitions:
         type: string
       email:
         type: string
-      id:
-        type: integer
       logoimage:
         type: string
       pix:
@@ -135,6 +133,10 @@ paths:
       - application/json
       description: Update an existing associated with the provided information.
       parameters:
+      - description: 'The ID of the associated'
+        in: query
+        name: ID
+        type: integer
       - description: Updated associated data
         in: body
         name: payload

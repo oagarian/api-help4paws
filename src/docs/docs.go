@@ -112,6 +112,12 @@ const docTemplate = `{
                 "summary": "Update an associated",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "The ID of the associated",
+                        "name": "ID",
+                        "in": "query"
+                    },
+                    {
                         "description": "Updated associated data",
                         "name": "payload",
                         "in": "body",
@@ -257,9 +263,6 @@ const docTemplate = `{
                 },
                 "email": {
                     "type": "string"
-                },
-                "id": {
-                    "type": "integer"
                 },
                 "logoimage": {
                     "type": "string"
