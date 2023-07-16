@@ -2,7 +2,7 @@
 
 API para o aplicaitvo [Help4Paws](https://github.com/oagarian/Help4Paws)
 
-## Como rodar
+## Como rodar (Direto na máquina)
 
 ### 1. Clone o repositório e entre diretório do projeto
 
@@ -23,6 +23,28 @@ E preencha utilziando as variáveis informadas no arquivo mencionado.
 $ go mod tidy
 $ cd src
 $ go run ./
+~~~
+
+<br>
+
+## Como rodar (Contâiner)
+### 1. Clone o repositório e entre diretório do projeto
+
+~~~bash
+$ git clone https://github.com/oagarian/api-help4paws.git
+$ cd api-help4paws/
+~~~
+
+### 2. Configure as variáveis de variáveis de ambiente
+
+Crie uma cópia do arquivo `.env.example` com o nome de `.env`.
+
+E preencha utilziando as variáveis informadas no arquivo mencionado.
+
+### 3. Dê build e run no contâiner
+~~~bash
+$ docker compose build
+$ docker compose run --service-ports web
 ~~~
 
 <br>
