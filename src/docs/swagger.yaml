@@ -1,61 +1,61 @@
 definitions:
   route.AssociatedRequest:
     properties:
-      asscdescription:
-        type: string
       asscname:
         type: string
-      contactnumber:
+      logoimage:
         type: string
-      descriptionaddr:
+      asscdescription:
         type: string
       email:
         type: string
-      logoimage:
+      contactnumber:
         type: string
       pix:
         type: string
       street:
+        type: string
+      descriptionaddr:
         type: string
     type: object
   route.AssociatedResponse:
     properties:
-      asscdescription:
-        type: string
+      id:
+        type: integer
       asscname:
         type: string
-      contactnumber:
+      logoimage:
         type: string
-      descriptionaddr:
+      asscdescription:
         type: string
       email:
         type: string
-      id:
-        type: integer
-      logoimage:
+      contactnumber:
         type: string
       pix:
         type: string
       street:
+        type: string
+      descriptionaddr:
         type: string
     type: object
   route.UpdateAssociatedRequest:
     properties:
-      asscdescription:
-        type: string
       asscname:
         type: string
-      contactnumber:
+      logoimage:
         type: string
-      descriptionaddr:
+      asscdescription:
         type: string
       email:
         type: string
-      logoimage:
+      contactnumber:
         type: string
       pix:
         type: string
       street:
+        type: string
+      descriptionaddr:
         type: string
     type: object
   route.UpdateAssociatedResponse:

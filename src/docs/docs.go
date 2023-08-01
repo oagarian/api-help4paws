@@ -186,28 +186,28 @@ const docTemplate = `{
         "route.AssociatedRequest": {
             "type": "object",
             "properties": {
-                "asscdescription": {
-                    "type": "string"
-                },
                 "asscname": {
                     "type": "string"
                 },
-                "contactnumber": {
+                "logoimage": {
                     "type": "string"
                 },
-                "descriptionaddr": {
+                "asscdescription": {
                     "type": "string"
                 },
                 "email": {
                     "type": "string"
                 },
-                "logoimage": {
+                "contactnumber": {
                     "type": "string"
                 },
                 "pix": {
                     "type": "string"
                 },
                 "street": {
+                    "type": "string"
+                },
+                "descriptionaddr": {
                     "type": "string"
                 }
             }
@@ -215,31 +215,31 @@ const docTemplate = `{
         "route.AssociatedResponse": {
             "type": "object",
             "properties": {
-                "asscdescription": {
-                    "type": "string"
+                "id": {
+                    "type": "integer"
                 },
                 "asscname": {
                     "type": "string"
                 },
-                "contactnumber": {
+                "logoimage": {
                     "type": "string"
                 },
-                "descriptionaddr": {
+                "asscdescription": {
                     "type": "string"
                 },
                 "email": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
-                },
-                "logoimage": {
+                "contactnumber": {
                     "type": "string"
                 },
                 "pix": {
                     "type": "string"
                 },
                 "street": {
+                    "type": "string"
+                },
+                "descriptionaddr": {
                     "type": "string"
                 }
             }
@@ -276,28 +276,28 @@ const docTemplate = `{
         "route.UpdateAssociatedResponse": {
             "type": "object",
             "properties": {
-                "asscdescription": {
-                    "type": "string"
-                },
                 "asscname": {
                     "type": "string"
                 },
-                "contactnumber": {
+                "logoimage": {
                     "type": "string"
                 },
-                "descriptionaddr": {
+                "asscdescription": {
                     "type": "string"
                 },
                 "email": {
                     "type": "string"
                 },
-                "logoimage": {
+                "contactnumber": {
                     "type": "string"
                 },
                 "pix": {
                     "type": "string"
                 },
                 "street": {
+                    "type": "string"
+                },
+                "descriptionaddr": {
                     "type": "string"
                 }
             }
