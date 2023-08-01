@@ -84,10 +84,8 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "202": {
-                        "description": "Deleted successfully!",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "Deleted successfully!"
+
                     }
                 }
             }

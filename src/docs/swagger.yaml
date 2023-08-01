@@ -120,8 +120,6 @@ paths:
       responses:
         "202":
           description: Deleted successfully!
-          schema:
-            type: string
       security:
       - BasicAuth: []
       summary: Delete an associated
