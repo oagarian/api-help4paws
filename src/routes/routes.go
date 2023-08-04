@@ -9,7 +9,10 @@ import (
 	util "modules_API/src/utils"
 	"net/http"
 	"strconv"
+
 	"github.com/labstack/echo/v4"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 func MainRoute(context echo.Context) error {
@@ -37,7 +40,8 @@ func GetAssociatedsRoute(context echo.Context) error {
 		log.Println(err)
 		util.RecordLog(err)
 	}
-	data := service.SelectRouteResult(order, locate, int32(intValue), context)
+	finalLocate := cases.Title(language.BrazilianPortuguese).String(locate)
+	data := service.SelectRouteResult(order, finalLocate, int32(intValue), context)
 	return context.JSON(http.StatusOK, data)
 }
 
