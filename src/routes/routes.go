@@ -5,14 +5,16 @@ import (
 	"log"
 	model "modules_API/src/models"
 	db "modules_API/src/repositories"
-	service "modules_API/src/services"
+	"time"
+
+	//service "modules_API/src/services"
 	util "modules_API/src/utils"
 	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
+	//"golang.org/x/text/cases"
+	//"golang.org/x/text/language"
 )
 
 func MainRoute(context echo.Context) error {
@@ -23,7 +25,7 @@ var database = util.ConnectDatabase()
 
 
 func GetAssociatedsRoute(context echo.Context) error {
-	context.Response().Header().Set("Content-Type", "application/json")
+	/*context.Response().Header().Set("Content-Type", "application/json")
 	queries := context.QueryParams()
 	order := queries.Get("order")
 	locate := queries.Get("locate")
@@ -42,6 +44,17 @@ func GetAssociatedsRoute(context echo.Context) error {
 	}
 	finalLocate := cases.Title(language.BrazilianPortuguese).String(locate)
 	data := service.SelectRouteResult(order, finalLocate, int32(intValue), context)
+	return context.JSON(http.StatusOK, data)*/
+	data := map[string]interface{}{
+		"intValue":    1234,
+		"boolValue":   true,
+		"stringValue": "hello!",
+		"dateValue":   time.Date(2022, 3, 2, 9, 10, 0, 0, time.UTC),
+		"objectValue": map[string]interface{}{
+			"arrayValue": []int{1, 2, 3, 4},
+		},
+	}
+	log.Println("Fizero requisiçao patrao")
 	return context.JSON(http.StatusOK, data)
 }
 

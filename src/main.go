@@ -20,7 +20,10 @@ func main() {
 	adminGroup.POST("/add", route.AddAssociatedRoute)
 	adminGroup.PUT("/update", route.UpdateAssociatedRoute)
 	adminGroup.DELETE("/delete", route.DeleteAssociatedRoute)
-	
+	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
 	app.GET("/docs/*", echoSwagger.WrapHandler)
 	app.GET("/", route.MainRoute)
 	app.Start(":8080")
