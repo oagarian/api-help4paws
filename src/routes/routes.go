@@ -42,6 +42,7 @@ func GetAssociatedsRoute(context echo.Context) error {
 	}
 	finalLocate := cases.Title(language.BrazilianPortuguese).String(locate)
 	data := service.SelectRouteResult(order, finalLocate, int32(intValue), context)
+	log.Println("Request feito!")
 	return context.JSON(http.StatusOK, data)
 }
 
