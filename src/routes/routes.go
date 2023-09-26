@@ -108,4 +108,13 @@ func DeleteAssociatedRoute(context echo.Context) error {
 	return context.String(http.StatusAccepted, "Deleted successfully!")
 }
 
+func GetAmountRoute(context echo.Context) error {
+	context.Response().Header().Set("Content-Type", "application/json")
+	amount, err := database.GetAmount(ctx.Background())
+	if err != nil {
+		log.Println(err)
+		util.RecordLog(err)
+	}
 
+	return context.String(http.StatusAccepted, strconv.Itoa(int(amount)))
+}
